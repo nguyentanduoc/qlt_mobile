@@ -1,0 +1,54 @@
+{
+  "_from": "git+https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git",
+  "_id": "cordova-plugin-service-worker-background-sync@1.0.1",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-service-worker-background-sync",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git",
+    "rawSpec": "https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git",
+    "saveSpec": "git+https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git",
+    "fetchSpec": "https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git#d3c29b195f5e9ad446764f4f9f5d00306ae80ce8",
+  "_spec": "https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git",
+  "_where": "D:\\new2\\qlt_mobile_cordovar",
+  "author": {
+    "name": "The Chrome Team"
+  },
+  "bugs": {
+    "url": "https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-service-worker-background-sync",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Background Sync Plugin",
+  "homepage": "https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync#readme",
+  "keywords": [
+    "cordova",
+    "backgroundsync",
+    "service",
+    "worker",
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "license": "Apache 2.0",
+  "name": "cordova-plugin-service-worker-background-sync",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git"
+  },
+  "version": "1.0.1"
+}
