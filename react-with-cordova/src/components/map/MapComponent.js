@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import mapboxgl from "mapbox-gl";
+import ReactMapboxGl from "react-mapbox-gl";
 import Directions from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {Affix, Button} from "antd";
 
-const token = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
-mapboxgl.accessToken = token;
+const token = "pk.eyJ1IjoibnRkdW9jIiwiYSI6ImNqdWNpZGEyZTBtZ2E0ZXFxemw4ZXhvNGYifQ.LwX-4Db561hcAVS4WTiNzA";
+const Map = ReactMapboxGl({
+  accessToken: token
+});
 
 class MapComponent extends Component {
 
@@ -18,41 +20,11 @@ class MapComponent extends Component {
   }
 
   componentWillMount() {
-    const currentCoordinateReducer = this.props.currentCoordinateReducer;
     const searchReducer = this.props.searchReducer;
     if (!searchReducer.branch.id) {
       this.props.history.push("/");
-    } else {
-      const directions = new Directions({
-        accessToken: token,
-        unit: 'metric',
-        profile: 'mapbox/driving-traffic',
-        congestion: true,
-      });
-      directions.setOrigin([currentCoordinateReducer.currentCoordinate.longitude, currentCoordinateReducer.currentCoordinate.latitude]);
-      directions.setDestination([searchReducer.branch.longitude, searchReducer.branch.latitude]);
-      this.setState({directions: directions});
     }
   }
-
-  componentDidMount = async () => {
-    const map = await new mapboxgl.Map({
-      container: this.mapContainer,
-      style: 'mapbox://styles/mapbox/streets-v9',
-      center: [106.63503660, 10.85268900],
-      zoom: 14,
-    });
-    map.on('move', () => {
-      const {lng, lat} = map.getCenter();
-      this.setState({
-        lng: lng.toFixed(4),
-        lat: lat.toFixed(4),
-        zoom: map.getZoom().toFixed(2)
-      });
-    });
-    await map.addControl(this.state.directions, 'top-left');
-    this.setState({map: map});
-  };
 
   backSearch = () => {
     this.props.history.push("/");
@@ -64,21 +36,39 @@ class MapComponent extends Component {
     }
   }
 
+  onStyleLoad = (map) => {
+    const {currentCoordinate} = this.props.currentCoordinateReducer;
+    const {branch} = this.props.searchReducer;
+    const directions = new Directions({
+      accessToken: token,
+      unit: 'metric',
+      profile: 'mapbox/walking',
+      congestion: true,
+    });
+    directions.setOrigin([currentCoordinate.longitude, currentCoordinate.latitude]);
+    directions.setDestination([branch.longitude, branch.latitude]);
+    map.addControl(directions, 'top-left');
+  };
+
   render() {
+    const {currentCoordinate} = this.props.currentCoordinateReducer;
     return (
-      <div>
-        <div ref={el => this.mapContainer = el} className={'map-controller'}
-             style={{
-               position: 'absolute',
-               top: 0,
-               bottom: 0,
-               width: '100%',
-               height: '100%',
-             }}>
-          <Affix target={() => this.container} style={{position: 'absolute', top: 10, right: 3, zIndex: 200}}>
-            <Button type="primary" icon={'left'} onClick={this.backSearch}/>
-          </Affix>
-        </div>
+      <div style={{width: "100%", height: "100%"}}>
+        {
+          currentCoordinate && currentCoordinate.longitude && currentCoordinate.latitude &&
+          <Map
+            style="mapbox://styles/mapbox/streets-v8"
+            containerStyle={{
+              height: "100vh",
+              width: "100vw"
+            }}
+            center ={[currentCoordinate.longitude, currentCoordinate.latitude]}
+            onStyleLoad={this.onStyleLoad}
+          />
+        }
+        <Affix target={() => this.container} style={{position: 'absolute', top: 10, right: 3, zIndex: 200}}>
+          <Button type="primary" icon={'left'} onClick={this.backSearch}/>
+        </Affix>
       </div>
     );
   }

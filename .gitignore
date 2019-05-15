@@ -1,0 +1,14 @@
+
+\.idea/
+
+qlt_mobile_cordovar/www/
+
+qlt_mobile_cordovar/platforms/
+
+qlt_mobile_cordovar/plugins/
+
+react-with-cordova/www/
+
+qlt_mobile_cordovar/yarn\.lock
+
+*.lock

@@ -14,6 +14,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cordova-android": "^8.0.0",
+    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-service-worker": "^1.0.1",
     "cordova-plugin-service-worker-background-sync": "git+https://github.com/MobileChromeApps/cordova-plugin-service-worker-background-sync.git",
     "es6-promise-plugin": "git+https://github.com/vstirbu/PromisesPlugin.git"
@@ -23,7 +24,8 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "android"

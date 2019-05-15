@@ -7,48 +7,47 @@ import 'antd/dist/antd.css'
 import {connect} from "react-redux";
 import {setCurrentCoordinate} from './redux/actions/currentCoordinateAction'
 import MapComponent from "./components/map/MapComponent";
+import PropTypes from "prop-types";
+import currentCoordinateReducer from "./redux/reducers/currentCoordinateReducer";
 
 class App extends Component {
-
+  static propTypes = {
+    coords: PropTypes.object
+  };
   componentWillMount() {
-    this.getLocation();
-  }
-
-  getLocation() {
-    const location = window.navigator && window.navigator.geolocation;
-    if (location) {
-      location.getCurrentPosition((position) => {
-        this.props.onSetCurrentCoordinate({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        })
-      }, (e) => {
-        console.log(e)
-      })
+    const {currentCoordinate} = this.props.currentCoordinateReducer;
+    if(!currentCoordinate.latitude && !currentCoordinate.longitude){
+      this.props.onSetCurrentCoordinate({
+        latitude: this.props.coords.latitude,
+        longitude: this.props.coords.longitude,
+      });
     }
   }
 
   render() {
+    console.log(this.props.currentCoordinateReducer);
     return (
       <HashRouter>
         <Switch>
-          <Route exact path="/map" name="Bản đồ" component={MapComponent} />
-          <Route exact path="/" name="Tìm" component={SearchComponent} />
+          <Route exact path="/map" name="Bản đồ" component={MapComponent}/>
+          <Route exact path="/" name="Tìm" component={SearchComponent}/>
         </Switch>
       </HashRouter>
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
-    searchReducer: state.searchReducer
+    searchReducer: state.searchReducer,
+    currentCoordinateReducer: state.currentCoordinateReducer
   };
 }
 
-const dispatchToProp = (dispatch) => ({
+const dispatchToProps = (dispatch) => ({
   onSetCurrentCoordinate: (coordinate) => dispatch(setCurrentCoordinate(coordinate))
 });
 
 export default connect(
-  mapStateToProps, dispatchToProp
+  mapStateToProps, dispatchToProps
 )(App);

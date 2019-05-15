@@ -1,4 +1,9 @@
-const BASE_URI = "http://localhost:8090";
+let BASE_URI;
+if (process.env.NODE_ENV === 'production') {
+  BASE_URI = "http://192.168.1.4:8090"
+} else {
+  BASE_URI = "http://localhost:8090"
+}
 export default {
   URI: {
     PRODUCT: {

@@ -13,11 +13,23 @@ const options = {
   position: positions.BOTTOM_CENTER
 };
 
-ReactDOM.render(
-  <ReactAlertProvider template={AlertTemplate} {...options}>
-    <Provider store={store} >
-      <App/>
-    </Provider>
-  </ReactAlertProvider>
-  , document.getElementById('root'));
-serviceWorker.unregister();
+function initApp(coords) {
+  ReactDOM.render(
+    <ReactAlertProvider template={AlertTemplate} {...options}>
+      <Provider store={store}>
+        <App coords={coords}/>
+      </Provider>
+    </ReactAlertProvider>, document.getElementById('root'));
+    serviceWorker();
+};
+if (window.cordova) {
+  document.addEventListener("deviceready", () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      initApp(position.coords);
+    }, (error) => {
+      console.log(error)
+    });
+  }, false);
+} else {
+  initApp();
+}
